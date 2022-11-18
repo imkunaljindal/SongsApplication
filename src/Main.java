@@ -7,13 +7,19 @@ public class Main {
     public static void main(String[] args) {
 
         Album album1 = new Album("album1","Alan Walker");
-        album1.addSong("Alone",5.2);
-        album1.addSong("Faded",4.5);
-        album1.addSong("DarkSide",3.5);
+        album1.addSong("Song 1",5.2);
+        album1.addSong("Song 2",4.5);
+        album1.addSong("Song 3",3.5);
+        album1.addSong("Song 4",3.5);
+        album1.addSong("Song 5",5.5);
+        album1.addSong("Song 6",2.5);
 
         LinkedList<Song> myPlaylist  = new LinkedList<>();
-        album1.addToPlayList("Alone",myPlaylist);
-        album1.addToPlayList("DarkSide",myPlaylist);
+        album1.addToPlayList("Song 1",myPlaylist);
+        album1.addToPlayList("Song 2",myPlaylist);
+        album1.addToPlayList("Song 3",myPlaylist);
+        album1.addToPlayList("Song 4",myPlaylist);
+        album1.addToPlayList("Song 5",myPlaylist);
 
         play(myPlaylist);
     }
@@ -29,6 +35,8 @@ public class Main {
 
         System.out.println("You are now listening " + itr.next());
         showMenu();
+
+        boolean forward = true;
 
         while(true)
         {
@@ -46,7 +54,60 @@ public class Main {
                 case 2:
                     printList(playList);
                     break;
-
+                case 3:
+                    if(!forward){
+                        if(itr.hasNext())
+                            itr.next();
+                    }
+                    if(!itr.hasNext()){
+                        System.out.println("You have reached the end of playlist");
+                    }
+                    else{
+                        System.out.println("You are listening to "+itr.next());
+                    }
+                    forward = true;
+                    break;
+                case 4:
+                    if(forward){
+                        if(itr.hasPrevious())
+                            itr.previous();
+                    }
+                    if(!itr.hasPrevious()){
+                        System.out.println("You have reached the start of playlist");
+                    }
+                    else{
+                        System.out.println("You are listening to "+itr.previous());
+                    }
+                    forward = false;
+                    break;
+                case 5:
+                    if(forward){
+                        if(itr.hasPrevious()){
+                            System.out.println("Now playing "+itr.previous().toString());
+                            forward = false;
+                        }else {
+                            System.out.println("we are at the start of the list");
+                        }
+                    }else {
+                        if(itr.hasNext()){
+                            System.out.println("now playing "+itr.next().toString());
+                            forward = true;
+                        }else {
+                            System.out.println("we have reached to the end of list");
+                        }
+                    }
+                    break;
+                case 6:
+                    if (playList.size() >0){
+                        itr.remove();
+                        if(itr.hasNext()){
+                            System.out.println("now playing "+itr.next().toString());
+                        }
+                        else {
+                            if(itr.hasPrevious())
+                                System.out.println("now playing "+itr.previous().toString());
+                        }
+                    }
             }
         }
     }
